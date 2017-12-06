@@ -10,15 +10,7 @@ public class Automaton2D {
   
   public Automaton2D (int size, String rule_set) {
     this.size = size;
-    if (rule_set.length() < 8) {
-      for (int a = 0; a < 8-rule_set.length(); a++) {
-        rule_set = "0" + rule_set;
-      }
-    }
-    if (rule_set.length() > 8) {
-      rule_set = rule_set.substring(rule_set.length() - 8);
-    }
-    this.rule_set = rule_set;
+    this.rule_set = rule_set.toLowerCase();
     cell_space = new int[size][size];
   }
   
@@ -42,7 +34,8 @@ public class Automaton2D {
         
       }
     }
-    return cell_space;
+    
+    return cell_space.clone();
   }
   
   private String getNeighborhood (int x, int y) {

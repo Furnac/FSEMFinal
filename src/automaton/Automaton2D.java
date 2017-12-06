@@ -40,7 +40,7 @@ public class Automaton2D {
         int val = neighborhood % 4;
         String hex = rule_set.substring(place, place+1);
         String bin = new BigInteger(hex, 16).toString(2);
-        cell_space_back[x][y] = Integer.parseInt(bin.substring(val, val+1));
+        cell_space_back[x][y] = Integer.parseInt(""+bin.charAt(val));
       }
     }
     cell_space = cell_space_back.clone();

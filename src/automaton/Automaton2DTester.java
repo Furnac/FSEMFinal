@@ -9,6 +9,7 @@ public class Automaton2DTester {
     System.out.println(ca.toString());
     ca.init();
     System.out.println(ca.toString());
+    
     do {
       ca.step();
       System.out.println(ca.toString());

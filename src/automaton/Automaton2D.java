@@ -5,17 +5,22 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Automaton2D {
+  public static boolean VON_NEUMANN = false;
+  public static boolean MOORE = true;
+  private boolean neighborhood;
   private int size;
   private String ruleSet;
   private int[][] cellSpace;
   
   public Automaton2D () {
-    this.size = 10;
-    this.ruleSet = genRuleSet();
+    neighborhood = VON_NEUMANN;
+    size = 10;
+    ruleSet = genRuleSet();
     cellSpace = new int[size][size];
   }
   
-  public Automaton2D (int size) {
+  public Automaton2D (boolean neighborhood, int size) {
+    this.neighborhood = neighborhood;
     this.size = size;
     this.ruleSet = genRuleSet();
     cellSpace = new int[size][size];
@@ -66,17 +71,18 @@ public class Automaton2D {
     return cellSpace.clone();
   }
   
-  public static String genRuleSet () {
+  public String genRuleSet () {
     StringBuilder ruleSetNew = new StringBuilder ();
     Random rand = new Random();
-    //char[] chars = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-    for (int a = 0; a < 512; a++) {
+    int length = neighborhood ? 32 : 512;
+    for (int a = 0; a < length; a++) {
       ruleSetNew.append(rand.nextInt(2));
     }
+    
     return ruleSetNew.toString();
   }
   
-  public static String genRuleSet (int state) {
+  public String genRuleSet (int state) {
     StringBuilder ruleSetNew = new StringBuilder ();
     for (int a = 0; a < 512; a++) {
       ruleSetNew.append(wrap(state, 0, 2));

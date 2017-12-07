@@ -6,71 +6,82 @@ import java.util.Random;
 
 public class Automaton2D {
   private int size;
-  private String rule_set;
-  private int[][] cell_space;
+  private String ruleSet;
+  private int[][] cellSpace;
   
   public Automaton2D () {
     this.size = 10;
-    this.rule_set = genRuleSet();
-    cell_space = new int[size][size];
+    this.ruleSet = genRuleSet();
+    cellSpace = new int[size][size];
   }
   
   public Automaton2D (int size) {
     this.size = size;
-    this.rule_set = genRuleSet();
-    cell_space = new int[size][size];
+    this.ruleSet = genRuleSet();
+    cellSpace = new int[size][size];
   }
   
   public int[][] init () {
     Random rand = new Random();
     for (int x = 0; x < size; x++) {
       for (int y = 0; y < size; y++) {
-        cell_space[x][y] = rand.nextInt(2);
+        cellSpace[x][y] = rand.nextInt(2);
       }
     }
-    return cell_space.clone();
+    return cellSpace.clone();
   }
   
   public void clear () {
-    cell_space = new int[size][size];
+    cellSpace = new int[size][size];
   }
   
   public int[][] step () {
-    int[][] cell_space_back = new int[size][size];
+    int[][] cellSpaceBack = new int[size][size];
     for (int x = 0; x < size; x++) {
       for (int y = 0; y < size; y++) {
         int neighborhood = getNeighborhood(x, y);
-        int place = neighborhood / 4;
-        int val = (neighborhood % 4);
-        String hex = rule_set.substring(place, place+1);
-        String bin = String.format("%4s", Integer.toBinaryString(Integer.parseInt(hex, 16))).replace(' ', '0');
-        cell_space_back[x][y] = Integer.parseInt(bin.substring(val, val+1));
+        cellSpaceBack[x][y] = Integer.parseInt(ruleSet.substring(neighborhood, neighborhood+1));
       }
     }
-    cell_space = cell_space_back;
-    return cell_space.clone();
+    cellSpace = cellSpaceBack;
+    return cellSpace.clone();
   }
   
   public void set (int val, int x, int y) {
-    cell_space[wrap(x,0,size)][wrap(y, 0, size)] = wrap(val, 0, 1);
+    cellSpace[wrap(x,0,size)][wrap(y, 0, size)] = wrap(val, 0, 1);
+  }
+  
+  public void setRule (int rule, int state) {
+    String first = ruleSet.substring(0, rule);
+    String last = ruleSet.substring(rule + 1);
+    state = wrap(state, 0, 2);
+    ruleSet = first + state + last;
   }
   
   public void setRuleSet (String new_set) {
-    rule_set = new_set;
+    ruleSet = new_set;
   }
   
   public int[][] getCellSpace () {
-    return cell_space.clone();
+    return cellSpace.clone();
   }
   
   public static String genRuleSet () {
-    StringBuilder new_rule_set = new StringBuilder ();
+    StringBuilder ruleSetNew = new StringBuilder ();
     Random rand = new Random();
-    char[] chars = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-    for (int a = 0; a < 128; a++) {
-      new_rule_set.append(chars[rand.nextInt(16)]);
+    //char[] chars = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+    for (int a = 0; a < 512; a++) {
+      ruleSetNew.append(rand.nextInt(2));
     }
-    return new_rule_set.toString();
+    return ruleSetNew.toString();
+  }
+  
+  public static String genRuleSet (int state) {
+    StringBuilder ruleSetNew = new StringBuilder ();
+    for (int a = 0; a < 512; a++) {
+      ruleSetNew.append(wrap(state, 0, 2));
+    }
+    return ruleSetNew.toString();
   }
   
   @Override
@@ -78,7 +89,7 @@ public class Automaton2D {
     StringBuilder str = new StringBuilder();
     for (int x = 0; x < size; x++) {
       for (int y = 0; y < size; y++) {
-        str.append(cell_space[x][y]);
+        str.append(cellSpace[x][y]);
       }
       str.append("\n");
     }
@@ -91,13 +102,13 @@ public class Automaton2D {
       for (int yc = y - 1; yc <= y + 1; yc++) {
         int xb = wrap(xc, 0, size);
         int yb = wrap(yc, 0, size);
-        neighborhood.append(cell_space[xb][yb]);
+        neighborhood.append(cellSpace[xb][yb]);
       }
     }
     return Integer.parseInt(neighborhood.toString(), 2);
   }
   
-  private int wrap (int val, int min, int max) {
+  private static int wrap (int val, int min, int max) {
     int range = max - min;
     return Math.floorMod(val - min, range) + min;
   }

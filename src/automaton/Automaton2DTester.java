@@ -16,7 +16,12 @@ public class Automaton2DTester {
           ca.clear();
           break;
         case "gen":
-          ca.setRuleSet(Automaton2D.genRuleSet());
+          String s = scan.nextLine();
+          if (!s.isEmpty()) {
+            ca.setRuleSet(Automaton2D.genRuleSet(Integer.parseInt(s)));
+          }else {
+            ca.setRuleSet(Automaton2D.genRuleSet());
+          }
           break;
         case "set":
           int x = scan.nextInt();
@@ -24,11 +29,15 @@ public class Automaton2DTester {
           int val = scan.nextInt();
           ca.set(val, x, y);
           break;
+        case "rule":
+          int rule = Integer.parseInt(scan.nextLine(), 2);
+          int state = scan.nextInt();
+          ca.setRule(rule, state);
         default:
           break;
       }
       ca.step();
-      System.out.println(ca.toString().replace('0', '_').replace('1', '@'));
+      System.out.println(ca.toString().replace("0", "  ").replace("1", "[]"));
       action = scan.nextLine();
     }
   }

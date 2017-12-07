@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Automaton2DTester {
   public static void main (String[] args) {
     Scanner scan = new Scanner(System.in);
-    Automaton2D ca = new Automaton2D(60);
+    Automaton2D ca = new Automaton2D(10);
     System.out.println(ca.toString());
-    ca.set(1, 10, 10);
+    ca.init();
     
     String action = "";
     while (!action.equals("STOP")) {

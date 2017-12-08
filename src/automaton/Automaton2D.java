@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Random;
 
+//WORK ON EASIER RULE SETTING (IF ALIVE AND 2 OR MORE ARE ALIVE THEN DIE)
+
 public class Automaton2D {
   public static boolean VON_NEUMANN = false;
   public static boolean MOORE = true;

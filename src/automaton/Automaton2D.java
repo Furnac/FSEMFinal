@@ -4,8 +4,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Random;
 
-//WORK ON EASIER RULE SETTING (IF ALIVE AND 2 OR MORE ARE ALIVE THEN DIE)
-
 public class Automaton2D {
   public static boolean VON_NEUMANN = false;
   public static boolean MOORE = true;
@@ -65,6 +63,30 @@ public class Automaton2D {
     ruleSet = first + state + last;
   }
   
+  public void setRules (int currentState, int surrounding, String operation, int nextState) {
+    for (int a = 0; a < (neighborhood ? 512 : 32); a++) {
+      String bin = Integer.toBinaryString(a);
+      int bl = bin.length();
+      String fs = bin.substring(0, bl);
+      String ls = bin.substring(bl + 1);
+      String s = bin.substring(bl, bl + 1);
+      if (Integer.parseInt(s) == currentState) {
+        int sum = Integer.bitCount(Integer.parseInt(fs + ls, 2));
+        switch (operation) {
+          case "<":
+            if (sum < surrounding) setRule(a, nextState);
+            break;
+          case ">":
+            if (sum > surrounding) setRule(a, nextState);
+            break;
+          default:
+            if (sum == surrounding) setRule(a, nextState);
+            break;
+        }
+      }
+    }
+  }
+  
   public void setRuleSet (String new_set) {
     ruleSet = new_set;
   }
@@ -76,7 +98,7 @@ public class Automaton2D {
   public String genRuleSet () {
     StringBuilder ruleSetNew = new StringBuilder ();
     Random rand = new Random();
-    int length = neighborhood ? 32 : 512;
+    int length = neighborhood ? 512 : 32;
     for (int a = 0; a < length; a++) {
       ruleSetNew.append(rand.nextInt(2));
     }
@@ -107,15 +129,15 @@ public class Automaton2D {
   private int getNeighborhood (int x, int y) {
     StringBuilder n = new StringBuilder();
     if (neighborhood) { //VON NEUMANN NEIGHBORHOOD
+      n.append(cellSpace[x][wrap(y-1, 0, size)]);
       for (int xc = x - 1; xc <= x + 1; xc++) {
         int xb = wrap(xc, 0, size);
         n.append(cellSpace[xb][y]);
       }
-      n.append(cellSpace[x][wrap(y-1, 0, size)]);
       n.append(cellSpace[x][wrap(y+1, 0, size)]);
     } else { //MOORE NEIGHBORHOOD
-      for (int xc = x - 1; xc <= x + 1; xc++) {
-        for (int yc = y - 1; yc <= y + 1; yc++) {
+      for (int yc = y - 1; yc <= y + 1; yc++) {
+        for (int xc = x - 1; xc <= x + 1; xc++) {
           int xb = wrap(xc, 0, size);
           int yb = wrap(yc, 0, size);
           n.append(cellSpace[xb][yb]);

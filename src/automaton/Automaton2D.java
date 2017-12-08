@@ -103,15 +103,24 @@ public class Automaton2D {
   }
   
   private int getNeighborhood (int x, int y) {
-    StringBuilder neighborhood = new StringBuilder();
-    for (int xc = x - 1; xc <= x + 1; xc++) {
-      for (int yc = y - 1; yc <= y + 1; yc++) {
+    StringBuilder n = new StringBuilder();
+    if (neighborhood) { //VON NEUMANN NEIGHBORHOOD
+      for (int xc = x - 1; xc <= x + 1; xc++) {
         int xb = wrap(xc, 0, size);
-        int yb = wrap(yc, 0, size);
-        neighborhood.append(cellSpace[xb][yb]);
+        n.append(cellSpace[xb][y]);
+      }
+      n.append(cellSpace[x][wrap(y-1, 0, size)]);
+      n.append(cellSpace[x][wrap(y+1, 0, size)]);
+    } else { //MOORE NEIGHBORHOOD
+      for (int xc = x - 1; xc <= x + 1; xc++) {
+        for (int yc = y - 1; yc <= y + 1; yc++) {
+          int xb = wrap(xc, 0, size);
+          int yb = wrap(yc, 0, size);
+          n.append(cellSpace[xb][yb]);
+        }
       }
     }
-    return Integer.parseInt(neighborhood.toString(), 2);
+    return Integer.parseInt(n.toString(), 2);
   }
   
   private static int wrap (int val, int min, int max) {

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Automaton2DTester {
   public static void main (String[] args) {
     Scanner scan = new Scanner(System.in);
-    Automaton2D ca = new Automaton2D(10);
+    Automaton2D ca = new Automaton2D(Automaton2D.VON_NEUMANN, 10);
     System.out.println(ca.toString());
     ca.init();
     
@@ -18,9 +18,9 @@ public class Automaton2DTester {
         case "gen":
           String s = scan.nextLine();
           if (!s.isEmpty()) {
-            ca.setRuleSet(Automaton2D.genRuleSet(Integer.parseInt(s)));
+            ca.genRuleSet(Integer.parseInt(s));
           }else {
-            ca.setRuleSet(Automaton2D.genRuleSet());
+            ca.genRuleSet();
           }
           break;
         case "set":

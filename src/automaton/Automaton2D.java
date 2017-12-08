@@ -42,10 +42,10 @@ public class Automaton2D {
   
   public int[][] step () {
     int[][] cellSpaceBack = new int[size][size];
-    for (int x = 0; x < size; x++) {
-      for (int y = 0; y < size; y++) {
-        int neighborhood = getNeighborhood(x, y);
-        cellSpaceBack[x][y] = Integer.parseInt(ruleSet.substring(neighborhood, neighborhood+1));
+    for (int y = 0; y < size; y++) {
+      for (int x = 0; x < size; x++) {
+        int n = getNeighborhood(x, y);
+        cellSpaceBack[x][y] = Integer.parseInt("" + ruleSet.charAt(wrap(n-1, 0, (neighborhood ? 512: 32))));
       }
     }
     cellSpace = cellSpaceBack;
@@ -53,20 +53,26 @@ public class Automaton2D {
   }
   
   public void set (int val, int x, int y) {
-    cellSpace[wrap(x,0,size)][wrap(y, 0, size)] = wrap(val, 0, 1);
+    cellSpace[wrap(x,0,size)][wrap(y, 0, size)] = wrap(val, 0, 2);
   }
   
   public void setRule (int rule, int state) {
-    String first = ruleSet.substring(0, rule);
-    String last = ruleSet.substring(rule + 1);
+    String first = ruleSet.substring(0, Math.max(rule-1, 0));
+    String last = ruleSet.substring(rule);
     state = wrap(state, 0, 2);
     ruleSet = first + state + last;
   }
   
   public void setRules (int currentState, int surrounding, String operation, int nextState) {
     for (int a = 0; a < (neighborhood ? 512 : 32); a++) {
-      String bin = Integer.toBinaryString(a);
-      int bl = bin.length();
+      String b = Integer.toBinaryString(a);
+      String bin;
+      if (neighborhood) {
+        bin = ("000000000" + b).substring(b.length());
+      }else {
+        bin = ("00000" + b).substring(b.length());
+      }
+      int bl = bin.length()/2;
       String fs = bin.substring(0, bl);
       String ls = bin.substring(bl + 1);
       String s = bin.substring(bl, bl + 1);
@@ -102,23 +108,25 @@ public class Automaton2D {
     for (int a = 0; a < length; a++) {
       ruleSetNew.append(rand.nextInt(2));
     }
-    
+    ruleSet = ruleSetNew.toString();
     return ruleSetNew.toString();
   }
   
   public String genRuleSet (int state) {
     StringBuilder ruleSetNew = new StringBuilder ();
-    for (int a = 0; a < 512; a++) {
+    int length = neighborhood ? 512 : 32;
+    for (int a = 0; a < length; a++) {
       ruleSetNew.append(wrap(state, 0, 2));
     }
+    ruleSet = ruleSetNew.toString();
     return ruleSetNew.toString();
   }
   
   @Override
   public String toString () {
     StringBuilder str = new StringBuilder();
-    for (int x = 0; x < size; x++) {
-      for (int y = 0; y < size; y++) {
+    for (int y = 0; y < size; y++) {
+      for (int x = 0; x < size; x++) {
         str.append(cellSpace[x][y]);
       }
       str.append("\n");
@@ -128,7 +136,7 @@ public class Automaton2D {
   
   private int getNeighborhood (int x, int y) {
     StringBuilder n = new StringBuilder();
-    if (neighborhood) { //VON NEUMANN NEIGHBORHOOD
+    if (neighborhood == VON_NEUMANN) { //VON NEUMANN NEIGHBORHOOD
       n.append(cellSpace[x][wrap(y-1, 0, size)]);
       for (int xc = x - 1; xc <= x + 1; xc++) {
         int xb = wrap(xc, 0, size);

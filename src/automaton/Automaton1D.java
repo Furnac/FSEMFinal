@@ -19,12 +19,26 @@ public class Automaton1D {
     cellSpace = new int[size];
   }
   
-  public int[] init() {
+  public int[] init () {
     Random rand = new Random();
     for (int a = 0; a < size; a++) {
       cellSpace[a] = rand.nextInt(2);
     }
     return cellSpace.clone();
+  }
+  
+  public void step () {
+    int[] cellSpaceBack = cellSpace.clone();
+    for (int a = 0; a < size; a++) {
+      int n = getNeighborhood(a);
+      cellSpaceBack[a] = Integer.parseInt("" + ruleSet.charAt(n));
+    }
+    cellSpace = cellSpaceBack.clone();
+  }
+  
+  private int getNeighborhood (int x) {
+    String bin = "" + cellSpace[wrap(x - 1, 0, size)] + cellSpace[x] + cellSpace[wrap(x + 1, 0, size)];
+    return Integer.parseInt(bin, 2);
   }
   
   public void set (int val, int x) {
@@ -42,6 +56,12 @@ public class Automaton1D {
     ruleSet = newSet;
   }
   
+  public void setRuleSet (int newSet) {
+    String bin = Integer.toBinaryString(newSet);
+    String s = ("00000000" + bin).substring(bin.length());
+    ruleSet = new StringBuilder(s).reverse().toString();
+  }
+  
   public void genRuleSet () {
     StringBuilder builder = new StringBuilder();
     Random rand = new Random();
@@ -54,6 +74,15 @@ public class Automaton1D {
   private static int wrap (int val, int min, int max) {
     int range = max - min;
     return Math.floorMod(val - min, range) + min;
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder s = new StringBuilder();
+    for (int a = 0; a < size ; a++) {
+      s.append(cellSpace[a]);
+    }
+    return s.toString();
   }
   
 }

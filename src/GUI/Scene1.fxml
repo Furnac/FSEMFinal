@@ -12,18 +12,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -33,13 +28,13 @@
           </Menu>
         </menus>
       </MenuBar>
-      <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
-         <items>
-            <Accordion maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0">
-              <panes>
-                <TitledPane animated="false" text="One Dimensional">
-                     <content>
-                        <ScrollPane fitToWidth="true">
+      <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <tabs>
+          <Tab text="One Dimensional">
+               <content>
+                  <SplitPane dividerPositions="0.5">
+                     <items>
+                        <ScrollPane fitToWidth="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="400.0">
                            <content>
                               <VBox>
                                  <children>
@@ -65,22 +60,22 @@
                                           <Insets />
                                        </opaqueInsets>
                                        <children>
-                                          <Button mnemonicParsing="false" text="Toggle" GridPane.columnIndex="1">
+                                          <Button mnemonicParsing="false" onAction="#ca1d_runToggle" text="Toggle" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Step" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Button mnemonicParsing="false" onAction="#ca1d_step" text="Step" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Initialize" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                          <Button mnemonicParsing="false" onAction="#ca1d_initialize" text="Initialize" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                          <Button mnemonicParsing="false" onAction="#ca1d_clear" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -90,7 +85,7 @@
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Slider blockIncrement="0.1" majorTickUnit="0.2" max="1.0" maxWidth="-Infinity" minorTickCount="1" showTickMarks="true" value="0.5" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
+                                          <Slider fx:id="ca1d_speedSlider" blockIncrement="0.1" majorTickUnit="0.2" max="1.0" maxWidth="-Infinity" minorTickCount="1" onDragDone="#ca1d_setSpeed" showTickMarks="true" value="0.5" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -144,12 +139,12 @@
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Slider blockIncrement="1.0" majorTickUnit="9.0" max="60.0" maxWidth="-Infinity" min="3.0" minorTickCount="2" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1">
+                                          <Slider fx:id="ca1d_widthSlider" blockIncrement="1.0" majorTickUnit="9.0" max="60.0" maxWidth="-Infinity" min="3.0" minorTickCount="2" onDragDone="#ca1d_setWidth" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Slider>
-                                          <Slider blockIncrement="1.0" maxWidth="-Infinity" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Slider fx:id="ca1d_heightSlider" blockIncrement="1.0" maxWidth="-Infinity" onDragDone="#ca1d_setHeight" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -176,42 +171,42 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <RadioButton mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="000" GridPane.halignment="CENTER">
+                                          <RadioButton fx:id="ca1d_000rb" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca1d_setRulesRad" text="000" GridPane.halignment="CENTER">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </RadioButton>
-                                          <RadioButton layoutX="10.0" layoutY="17.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="001" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                          <RadioButton fx:id="ca1d_001rb" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca1d_setRulesRad" text="001" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </RadioButton>
-                                          <RadioButton mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="010" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                                          <RadioButton fx:id="ca1d_010rb" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca1d_setRulesRad" text="010" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </RadioButton>
-                                          <RadioButton mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="011" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+                                          <RadioButton fx:id="ca1d_011rb" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca1d_setRulesRad" text="011" GridPane.columnIndex="3" GridPane.halignment="CENTER">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </RadioButton>
-                                          <RadioButton mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="100" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                          <RadioButton fx:id="ca1d_100rb" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca1d_setRulesRad" text="100" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </RadioButton>
-                                          <RadioButton mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="101" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                          <RadioButton fx:id="ca1d_101rb" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca1d_setRulesRad" text="101" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </RadioButton>
-                                          <RadioButton mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="110" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                          <RadioButton fx:id="ca1d_110rb" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca1d_setRulesRad" text="110" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </RadioButton>
-                                          <RadioButton mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="111" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                          <RadioButton fx:id="ca1d_111rb" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca1d_setRulesRad" text="111" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -221,7 +216,7 @@
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <TextField text="00000000" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                          <TextField fx:id="ca1d_ruleTextField" onAction="#ca1d_setRulesText" text="00000000" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -232,11 +227,20 @@
                               </VBox>
                            </content>
                         </ScrollPane>
-                     </content>
-                  </TitledPane>
-                <TitledPane animated="false" text="Two Dimensional">
-                     <content>
-                        <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                        <ScrollPane>
+                           <content>
+                              <Canvas fx:id="ca1d_canvas" />
+                           </content>
+                        </ScrollPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+          <Tab text="Two Dimensional">
+               <content>
+                  <SplitPane dividerPositions="0.5">
+                     <items>
+                        <ScrollPane fitToWidth="true" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="400.0">
                            <content>
                               <VBox>
                                  <children>
@@ -248,22 +252,22 @@
                                     <Separator prefWidth="200.0" />
                                     <GridPane>
                                        <children>
-                                          <Button mnemonicParsing="false" text="Toggle" GridPane.columnIndex="1">
+                                          <Button mnemonicParsing="false" onAction="#ca2d_runToggle" text="Toggle" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Step" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Button mnemonicParsing="false" onAction="#ca2d_step" text="Step" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Initialize" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                          <Button mnemonicParsing="false" onAction="#ca2d__initialize" text="Initialize" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                          <Button mnemonicParsing="false" onAction="#ca2d_clear" text="Clear" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -273,7 +277,7 @@
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Slider blockIncrement="0.1" majorTickUnit="0.2" max="1.0" maxWidth="-Infinity" minorTickCount="1" showTickMarks="true" value="0.5" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
+                                          <Slider fx:id="ca2d_speedSlider" blockIncrement="0.1" majorTickUnit="0.2" max="1.0" maxWidth="-Infinity" minorTickCount="1" onDragDone="#ca2d_setSpeed" showTickMarks="true" value="0.5" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -333,12 +337,12 @@
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Slider blockIncrement="1.0" maxWidth="-Infinity" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1">
+                                          <Slider fx:id="ca2d_widthSlider" blockIncrement="1.0" maxWidth="-Infinity" onDragDone="#ca2d_setWIdth" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Slider>
-                                          <Slider blockIncrement="1.0" maxWidth="-Infinity" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Slider fx:id="ca2d_heightSlider" blockIncrement="1.0" maxWidth="-Infinity" onDragDone="#ca2d_setHeight" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -360,58 +364,149 @@
                                        </VBox.margin>
                                     </Label>
                                     <Separator prefWidth="200.0" />
+                                    <Label text="Required For Survival">
+                                       <VBox.margin>
+                                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox alignment="TOP_CENTER" fillHeight="false" VBox.vgrow="NEVER">
+                                       <children>
+                                          <RadioButton fx:id="ca2d_s0RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="0">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_s1RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="1">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_s2RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="2">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_s3RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="3">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_s4RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="4">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_s5RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="5">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_s6RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="6">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_s7RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="7">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_s8RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="8">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                    </HBox>
+                                    <Label layoutX="14.0" layoutY="382.0" text="Required For Birth">
+                                       <VBox.margin>
+                                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox alignment="TOP_CENTER" fillHeight="false" layoutX="10.0" layoutY="403.0">
+                                       <children>
+                                          <RadioButton fx:id="ca2d_b0RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="0">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_b1RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="1">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_b2RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="2">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_b3RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="3">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_b4RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="4">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_b5RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="5">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_b6RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="6">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_b7RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="7">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                          <RadioButton fx:id="ca2d_b8RadioButton" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#ca2d_setRulesMultiple" text="8">
+                                             <HBox.margin>
+                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                             </HBox.margin>
+                                          </RadioButton>
+                                       </children>
+                                    </HBox>
                                     <GridPane>
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                       </columnConstraints>
                                       <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <TextField promptText="Enter an Arrangement" GridPane.columnIndex="1">
+                                          <Label text="Neighborhood">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
-                                          </TextField>
-                                          <RadioButton mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" text="Next State" GridPane.halignment="RIGHT">
+                                          </Label>
+                                          <ComboBox fx:id="ca2d_neighborhoodComboBox" onAction="#ca2d_setNeighborhood" promptText="Choose a Neighborhood" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
-                                          </RadioButton>
-                                          <Button mnemonicParsing="false" text="Set Rule" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Button>
-                                          <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Rule Set Will Appear Here..." wrapText="true" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </TextArea>
-                                          <Button mnemonicParsing="false" text="Generate New Rule Set" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Button>
+                                          </ComboBox>
                                        </children>
                                     </GridPane>
                                  </children>
                               </VBox>
                            </content>
                         </ScrollPane>
-                     </content></TitledPane>
-              </panes>
-            </Accordion>
-            <ScrollPane fitToHeight="true" fitToWidth="true" pannable="true">
-               <content>
-                  <Canvas fx:id="canvas" />
+                        <ScrollPane>
+                           <content>
+                              <Canvas fx:id="ca2d_canvas" />
+                           </content>
+                        </ScrollPane>
+                     </items>
+                  </SplitPane>
                </content>
-            </ScrollPane>
-         </items>
-      </SplitPane>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </VBox>

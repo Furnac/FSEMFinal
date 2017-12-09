@@ -93,8 +93,8 @@ public class Automaton2D {
     }
   }
   
-  public void setRuleSet (String new_set) {
-    ruleSet = new_set;
+  public void setRuleSet (String newSet) {
+    ruleSet = newSet;
   }
   
   public int[][] getCellSpace () {

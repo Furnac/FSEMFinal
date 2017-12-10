@@ -3,6 +3,7 @@ package GUI;
 import automaton.Automaton1D;
 import automaton.Automaton2D;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,12 +19,12 @@ import java.util.concurrent.TimeUnit;
 public class Main extends Application {
   
   private static Automaton1D ca1d;
-  private static Timer ca1d_timer;
+  private static Thread ca1d_thread;
   private static boolean ca1d_isRunning;
   private static int ca1d_speed = 60;
   
   private static Automaton2D ca2d;
-  private static Timer ca2d_timer;
+  private static Thread ca2d_thread;
   private static boolean ca2d_isRunning;
   private static int ca2d_speed = 1;
   
@@ -48,9 +49,7 @@ public class Main extends Application {
 
   public static void main(String[] args) {
     ca1d = new Automaton1D();
-    ca1d_timer = new Timer();
     ca2d = new Automaton2D(Automaton2D.MOORE, 100);
-    ca2d_timer = new Timer();
     launch(args);
   }
   
@@ -79,19 +78,30 @@ public class Main extends Application {
   }
   
   public static void ca1d_run() {
-    ca1d_timer = new Timer();
-    TimerTask t = new TimerTask() {
+    ca1d_isRunning = true;
+    Runnable r = new Runnable() {
       public void run(){
-        ca1d_step();
+        while(ca1d_isRunning){
+          try {
+            ca1d.step();
+            Platform.runLater(new Runnable(){
+              public void run(){
+                controller.ca1d_updateCanvas(ca1d.getCellSpace());
+              }
+            });
+            Thread.sleep(1000 / ca1d_speed);
+          }catch(Exception e) {
+            ca1d_isRunning = false;
+            return;
+          }
+        }
       }
     };
-    ca1d_timer.schedule(t, 0, 1000/ca1d_speed);
-    ca1d_isRunning = true;
+    ca1d_thread = new Thread(r);
+    ca1d_thread.start();
   }
   
   public static void ca1d_stop() {
-    ca1d_timer.cancel();
-    ca1d_timer.purge();
     ca1d_isRunning = false;
   }
   
@@ -106,6 +116,10 @@ public class Main extends Application {
   //</editor-fold>
   
   //<editor-fold desc="TWO DIMENSIONAL">
+  
+  public static void ca2d_generateRandomRuleSet() {
+    ca2d.genRuleSet();
+  }
   
   public static void ca2d_setBirthRule(int surrounding, int state) {
     ca2d.setRules(0, surrounding, "=", state);
@@ -140,19 +154,30 @@ public class Main extends Application {
   }
   
   public static void ca2d_run() {
-    ca2d_timer = new Timer();
-    TimerTask t = new TimerTask() {
+    ca2d_isRunning = true;
+    Runnable r = new Runnable() {
       public void run(){
-        ca2d_step();
+        while(ca2d_isRunning){
+          try {
+            ca2d.step();
+            Platform.runLater(new Runnable(){
+              public void run(){
+                controller.ca2d_updateCanvas(ca2d.getCellSpace());
+              }
+            });
+            Thread.sleep(1000 / ca2d_speed);
+          }catch(Exception e) {
+            ca2d_isRunning = false;
+            return;
+          }
+        }
       }
     };
-    ca2d_timer.schedule(t, 0, 1000/ca2d_speed);
-    ca2d_isRunning = true;
+    ca2d_thread = new Thread(r);
+    ca2d_thread.start();
   }
   
   public static void ca2d_stop() {
-    ca2d_timer.cancel();
-    ca2d_timer.purge();
     ca2d_isRunning = false;
   }
   
@@ -168,10 +193,6 @@ public class Main extends Application {
   
   @Override
   public void stop() {
-    ca1d_timer.cancel();
-    ca1d_timer.purge();
-    ca2d_timer.cancel();
-    ca2d_timer.purge();
     System.exit(0);
   }
   

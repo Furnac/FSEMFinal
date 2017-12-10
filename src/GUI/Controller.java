@@ -65,7 +65,7 @@ public class Controller {
     int b7 = ca1d_111rb.isSelected() ? 1 : 0;
     String set = "" + b0 + b1 + b2 + b3 + b4 + b5 + b6 + b7;
     Main.ca1d_setRules(set);
-    ca1d_ruleTextField.setText(set);
+    ca1d_ruleTextField.setText((new StringBuilder(set)).reverse().toString());
   }
   
   public void ca1d_updateCanvas(int[] cellSpace) {
@@ -73,15 +73,14 @@ public class Controller {
     GraphicsContext gc = ca1d_canvas.getGraphicsContext2D();
     double width = ca1d_canvas.getWidth();
     double height = ca1d_canvas.getHeight();
-    gc.setFill(Color.WHITE);
     if (ca1d_reset) {
-      gc.fillRect(0, 0, width, height);
+      gc.clearRect(0, 0, width, height);
       ca1d_reset = false;
     }
-    double cs = Math.floor(((width < height) ? width/cellSpace.length : height/ca1d_heightSlider.getValue()));
+    gc.setFill(Color.BLACK);
+    double cs = Math.round(((width < height) ? width/cellSpace.length : height/ca1d_heightSlider.getValue()));
     for (int x = 0; x < cellSpace.length; x++) {
-      gc.setFill((cellSpace[x] == 1) ? Color.BLACK : Color.WHITE);
-      gc.fillRect(x * cs, ca1d_yCurrent * cs, cs, cs);
+      if(cellSpace[x] == 1) gc.fillRect(x * cs, ca1d_yCurrent * cs, cs, cs);
     }
     ca1d_yCurrent++;
     if (ca1d_yCurrent >= ca1d_heightSlider.getValue()) {
@@ -97,7 +96,7 @@ public class Controller {
   //<editor-fold desc="elements">
   @FXML private Slider ca2d_speedSlider;
   @FXML private Slider ca2d_sizeSlider;
-  @FXML private ComboBox<?> ca2d_neighborhoodComboBox;
+  //@FXML private ComboBox<?> ca2d_neighborhoodComboBox;
   @FXML private RadioButton ca2d_b0RadioButton;
   @FXML private RadioButton ca2d_b1RadioButton;
   @FXML private RadioButton ca2d_b2RadioButton;
@@ -162,14 +161,16 @@ public class Controller {
       Main.ca2d_setSurvivalRule(a, rules[a]);
     }
   }
-  @FXML void ca2d_setNeighborhood(ActionEvent event) {}
-  @FXML void ca2d_randomRuleSet(ActionEvent event) {}
+  //@FXML void ca2d_setNeighborhood(ActionEvent event) {}
+  @FXML void ca2d_generateRandomRuleSet(ActionEvent event) {
+    Main.ca2d_generateRandomRuleSet();
+  }
   
   public void ca2d_toggleState(int x, int y) {
     double width = ca2d_canvas.getWidth();
     double height = ca2d_canvas.getHeight();
     int s = Main.ca2d_getSize();
-    double cs = Math.floor(((width < height) ? width/s : height/s));
+    double cs = Math.round(((width < height) ? width/s : height/s));
     x/=cs;
     y/=cs;
     ca2d_updateCanvas(Main.ca2d_toggleState(x, y));
@@ -180,13 +181,13 @@ public class Controller {
     GraphicsContext gc = ca2d_canvas.getGraphicsContext2D();
     double width = ca2d_canvas.getWidth();
     double height = ca2d_canvas.getHeight();
-    gc.setFill(Color.WHITE);
-    gc.fillRect(0, 0, width, height);
-    double cs = Math.floor(((width < height) ? width/cellSpace.length : height/cellSpace.length));
+    gc.clearRect(0, 0, width, height);
+    gc.setFill(Color.BLACK);
+    double cs = Math.round(((width < height) ? width/cellSpace.length : height/cellSpace.length));
     for (int y = 0; y < cellSpace.length; y++) {
       for (int x = 0; x < cellSpace.length; x++) {
-        gc.setFill((cellSpace[x][y] == 1) ? Color.BLACK : Color.WHITE);
-        gc.fillRect(x * cs, y * cs, cs, cs);
+        //gc.setFill((cellSpace[x][y] == 1) ? Color.BLACK : Color.WHITE);
+        if(cellSpace[x][y] == 1) gc.fillRect(x * cs, y * cs, cs, cs);
       }
     }
   }

@@ -151,12 +151,12 @@
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Slider fx:id="ca1d_widthSlider" blockIncrement="1.0" majorTickUnit="10.0" maxWidth="-Infinity" min="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="10.0" GridPane.columnIndex="1">
+                                          <Slider fx:id="ca1d_widthSlider" blockIncrement="1.0" majorTickUnit="70.0" max="500.0" maxWidth="-Infinity" min="10.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="10.0" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Slider>
-                                          <Slider fx:id="ca1d_heightSlider" blockIncrement="1.0" majorTickUnit="10.0" maxWidth="-Infinity" min="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <Slider fx:id="ca1d_heightSlider" blockIncrement="1.0" majorTickUnit="70.0" max="500.0" maxWidth="-Infinity" min="10.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -289,7 +289,7 @@
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Slider fx:id="ca2d_speedSlider" blockIncrement="1.0" majorTickUnit="3.0" max="10.0" maxWidth="-Infinity" min="1.0" minorTickCount="2" showTickMarks="true" value="5.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
+                                          <Slider fx:id="ca2d_speedSlider" blockIncrement="1.0" majorTickUnit="3.0" max="60.0" maxWidth="-Infinity" min="1.0" minorTickCount="0" showTickMarks="true" value="5.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -344,7 +344,7 @@
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
                                           </Label>
-                                          <Slider fx:id="ca2d_sizeSlider" blockIncrement="1.0" max="75.0" maxWidth="-Infinity" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1">
+                                          <Slider fx:id="ca2d_sizeSlider" blockIncrement="1.0" majorTickUnit="100.0" max="500.0" maxWidth="-Infinity" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50.0" GridPane.columnIndex="1">
                                              <GridPane.margin>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </GridPane.margin>
@@ -473,32 +473,11 @@
                                           </RadioButton>
                                        </children>
                                     </HBox>
-                                    <GridPane>
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label text="Neighborhood">
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <ComboBox fx:id="ca2d_neighborhoodComboBox" onAction="#ca2d_setNeighborhood" promptText="Choose a Neighborhood" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                             </GridPane.margin>
-                                          </ComboBox>
-                                          <Button mnemonicParsing="false" onAction="#ca2d_randomRuleSet" text="Generate Super Random Ruleset (512 rules)" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                             </GridPane.margin></Button>
-                                       </children>
-                                    </GridPane>
+                                    <Button mnemonicParsing="false" onAction="#ca2d_generateRandomRuleSet" text="Generate Random Rule Set">
+                                       <VBox.margin>
+                                          <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                       </VBox.margin>
+                                    </Button>
                                  </children>
                               </VBox>
                            </content>

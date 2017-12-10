@@ -27,6 +27,12 @@ public class Automaton1D {
     return cellSpace.clone();
   }
   
+  public void clear () {
+    for (int x = 0; x < size; x++) {
+      cellSpace[x] = 0;
+    }
+  }
+  
   public void step () {
     int[] cellSpaceBack = cellSpace.clone();
     for (int a = 0; a < size; a++) {
@@ -39,6 +45,15 @@ public class Automaton1D {
   private int getNeighborhood (int x) {
     String bin = "" + cellSpace[wrap(x - 1, 0, size)] + cellSpace[x] + cellSpace[wrap(x + 1, 0, size)];
     return Integer.parseInt(bin, 2);
+  }
+  
+  public void setWidth (int width) {
+    size = width;
+    cellSpace = new int[size];
+  }
+  
+  public int getSize () {
+    return size;
   }
   
   public void set (int val, int x) {
@@ -83,6 +98,10 @@ public class Automaton1D {
       s.append(cellSpace[a]);
     }
     return s.toString();
+  }
+  
+  public int[] getCellSpace() {
+    return cellSpace.clone();
   }
   
 }

@@ -36,8 +36,9 @@ public class Automaton2D {
     return cellSpace.clone();
   }
   
-  public void clear () {
+  public int[][] clear () {
     cellSpace = new int[size][size];
+    return cellSpace.clone();
   }
   
   public int[][] step () {
@@ -50,6 +51,13 @@ public class Automaton2D {
     }
     cellSpace = cellSpaceBack;
     return cellSpace.clone();
+  }
+  
+  public int[][] toggleState(int x, int y) {
+    if(x > size-1 || y > size-1) return cellSpace.clone();
+    cellSpace[x][y] = (cellSpace[x][y] == 1) ? 0 : 1;
+    return cellSpace.clone();
+    
   }
   
   public void set (int val, int x, int y) {
@@ -153,6 +161,15 @@ public class Automaton2D {
       }
     }
     return Integer.parseInt(n.toString(), 2);
+  }
+  
+  public void setSize(int size) {
+    this.size = size;
+    cellSpace = new int[size][size];
+  }
+  
+  public int getSize() {
+    return size;
   }
   
   private static int wrap (int val, int min, int max) {
